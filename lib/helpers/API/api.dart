@@ -1,6 +1,8 @@
 import '../../models/models.dart';
 import 'package:dio/dio.dart';
 import './dioInstance.dart';
+import '../../utils/utils.dart';
+import '../../providers/providers.dart';
 
 class API {
   final Dio _dioinstance = DioInstance().construct;
@@ -18,6 +20,15 @@ class API {
       return DIOResponseBody(
           success: true, data: respone.data['data']['accessToken']);
     }).catchError((error) {
+      if (error == null) {
+        return DIOResponseBody(success: false, data: 'Network Error');
+      }
+      print(error);
+      logger.e(error.type);
+      if (error.response == null) {
+        return DIOResponseBody(
+            success: false, data: 'Connection to Backend Failed');
+      }
       return DIOResponseBody(
           success: false, data: error.response.data['message']);
     });
@@ -43,6 +54,22 @@ class API {
     }).catchError((error) {
       print(error.response);
       return false;
+    });
+  }
+
+  Future<DIOResponseBody> sendWeatherPredicationData(
+      {latitude, longitude}) async {
+    return _dioinstance
+        .post('user/weather',
+            data: {'lat': latitude, 'lon': longitude},
+            options: Options(headers: {
+              'authorization': 'Bearer ' + UserDataProvider().accessToken
+            }))
+        .then((response) {
+      return DIOResponseBody(success: true, data: response);
+    }).catchError((error) {
+      print(error.toString());
+      return null;
     });
   }
 }

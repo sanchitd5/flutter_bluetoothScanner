@@ -5,6 +5,7 @@ import '../../configurations/configurations.dart';
 import '../../helpers/helpers.dart';
 import '../../providers/providers.dart';
 import '../../models/models.dart';
+import '../../utils/utils.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -44,6 +45,7 @@ class _LoginFormState extends State<LoginForm> {
         }
         if (loginCheck.success) {
           assignToken(loginCheck.data);
+          AlarmManagerBootstraper.bootstrap();
           Navigator.of(context).pushReplacementNamed('/home');
         } else {
           Scaffold.of(context).showSnackBar(SnackBar(
@@ -94,6 +96,9 @@ class _LoginFormState extends State<LoginForm> {
                 loginValues.username = value;
               },
               validator: (value) {
+                if (_devModeSwitchValue) {
+                  return null;
+                }
                 if (value.isEmpty) {
                   return 'Please Enter the Email';
                 }
@@ -124,6 +129,9 @@ class _LoginFormState extends State<LoginForm> {
                 loginValues.password = value;
               },
               validator: (value) {
+                if (_devModeSwitchValue) {
+                  return null;
+                }
                 if (value.isEmpty) {
                   return 'Please Enter the password';
                 }
