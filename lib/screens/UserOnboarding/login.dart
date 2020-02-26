@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../configurations/configurations.dart';
+import '../../configurations/configurations.dart';
 
-import '../helpers/API/api.dart';
-import '../providers/providers.dart';
-import '../models/models.dart';
+import '../../helpers/helpers.dart';
+import '../../providers/providers.dart';
+import '../../models/models.dart';
 
 class LoginForm extends StatefulWidget {
   @override

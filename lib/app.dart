@@ -6,8 +6,7 @@ import './configurations/configurations.dart';
 import './routes/routes.dart';
 import './theme/theme.dart';
 
-import './screens/home.dart';
-import './screens/login.dart';
+import './screens/screens.dart';
 
 class Application extends StatelessWidget {
   @override
