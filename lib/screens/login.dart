@@ -178,7 +178,7 @@ class Login extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(top: 20),
                 child: Text(
-                  'Flutter User Onboarding',
+                  'Bluetooth Scanner',
                   style: TextStyle(
                       fontSize: 60,
                       fontFamily: 'pricedown',

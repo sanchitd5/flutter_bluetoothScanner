@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/models.dart';
 
 class Configurations {
-  final String _appTitle = "useronboarding";
+  final String _appTitle = "bluetoothScanner";
   final String _backendUrl = "http://localhost:8041";
   final bool _bypassbackend = true;
   final String _devUserName = "developer@dev.dev";

@@ -1,4 +1,4 @@
-# user_onboarding
+# Bluetooth Scanner
 
 A new Flutter project.
 
