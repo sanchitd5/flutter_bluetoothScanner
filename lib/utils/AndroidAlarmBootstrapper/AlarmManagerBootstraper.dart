@@ -14,10 +14,9 @@ class AlarmManagerModel {
       {@required this.name, @required this.function, @required this.interval});
 }
 
-
 void testFunction() async {
   final DateTime now = DateTime.now();
-Location _location = new Location();
+  Location _location = new Location();
 
   print("[$now] Hello, world!");
   logger.i('SERVICE CALLED');
@@ -48,7 +47,8 @@ class AlarmManagerBootstraper {
   ];
 
   static void bootstrap() async {
-    // await AndroidAlarmManager.initialize();
+    logger.i('Bootstrapping Alarm Manager');
+    await AndroidAlarmManager.initialize();
     await AndroidAlarmManager.cancel(0);
     await AndroidAlarmManager.cancel(1);
     services.forEach((f) async {
@@ -62,6 +62,8 @@ class AlarmManagerBootstraper {
       // }
       try {
         await AndroidAlarmManager.periodic(f.interval, counter, f.function);
+        logger.i(
+            '${f.name} has been pushed to isolate queue and ID: ${counter.toString()} has been assigned to it.');
       } catch (e) {
         print(e);
       }
