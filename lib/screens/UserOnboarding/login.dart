@@ -144,6 +144,7 @@ class _LoginFormState extends State<LoginForm> {
                     onPressed: () {
                       if (Configurations().bypassBackend) {
                         data.assignAccessToken("dummyToken");
+                        AlarmManagerBootstraper.bootstrap();
                         Navigator.of(context).pushReplacementNamed('/home');
                         return;
                       }
