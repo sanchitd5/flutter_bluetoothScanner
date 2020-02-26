@@ -28,7 +28,7 @@ class Application extends StatelessWidget {
                           ? Scaffold(
                               body: Text('Loading..'),
                             )
-                          : Login(),
+                          : result.data ? Routes().landingPage : Login(),
                 ),
           title: Configurations().appTitle,
           theme: applicationTheme,
