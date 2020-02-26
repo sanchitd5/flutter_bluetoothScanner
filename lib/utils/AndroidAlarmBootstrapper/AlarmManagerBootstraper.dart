@@ -1,5 +1,7 @@
 import 'package:android_alarm_manager/android_alarm_manager.dart';
+import 'package:bluetoothScanner/models/modelHelpers.dart';
 import 'package:flutter/foundation.dart';
+import 'package:location/location.dart';
 
 import '../utils.dart';
 import '../../helpers/helpers.dart';
@@ -15,11 +17,27 @@ class AlarmManagerModel {
 
 void testFunction() async {
   final DateTime now = DateTime.now();
+Location _location = new Location();
 
   print("[$now] Hello, world!");
   logger.i('SERVICE CALLED');
   print('SERVICE CALLED');
-
+  PermissionStatus locationPermissionCheck =
+      await _location.requestPermission();
+  if (locationPermissionCheck == PermissionStatus.GRANTED) {
+    LocationData _xyz = await _location.getLocation();
+    logger.i(_xyz.latitude);
+    API _api = new API();
+    DIOResponseBody response = await _api.sendWeatherPredicationData(
+        latitude: _xyz.latitude, longitude: _xyz.longitude);
+    if (response.success) {
+      logger.i('response sent');
+      print('response sent');
+    } else {
+      logger.i('error from api');
+      print('error from api');
+    }
+  }
 }
 
 class AlarmManagerBootstraper {
