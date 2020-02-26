@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../helpers/API/api.dart';
+import '../helpers/helpers.dart';
 
 class UserDataProvider with ChangeNotifier {
   String _accessToken;
