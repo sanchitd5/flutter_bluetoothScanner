@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../providers/providers.dart';
+import '../../providers/providers.dart';
 
 class Home extends StatelessWidget {
   @override
