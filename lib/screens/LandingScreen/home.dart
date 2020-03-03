@@ -1,3 +1,5 @@
+
+import '../../helpers/Channels/AndroidChannel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -35,6 +37,41 @@ class Home extends StatelessWidget {
                     onbuttonPressed: () {
                       Navigator.pushNamed(context, '/bluetoothConnection');
                     }),
+                LandingPageCardTileModel(
+                    title: 'getLocationFromChannel',
+                    buttonText: 'Get',
+                    icon: Icons.location_on,
+                    onbuttonPressed: () {
+                      AndroidChannel.getLastLocation();
+                    }),
+                LandingPageCardTileModel(
+                    title: 'hit Access token from android',
+                    buttonText: 'Log',
+                    icon: Icons.android,
+                    onbuttonPressed: () {
+                      AndroidChannel.logAccessToken();
+                    }),
+                LandingPageCardTileModel(
+                    title: 'hit Access token from flutter',
+                    buttonText: 'Log',
+                    icon: Icons.language,
+                    onbuttonPressed: () {
+                      UserDataProvider().accessTokenLogin();
+                    }),
+                LandingPageCardTileModel(
+                    title: 'Log Internet Connectivity',
+                    buttonText: 'Log',
+                    icon: Icons.signal_cellular_connected_no_internet_4_bar,
+                    onbuttonPressed: () {
+                      AndroidChannel.logInternetConnectivity();
+                    }),
+                LandingPageCardTileModel(
+                    title: 'Start Android Alarm Manager',
+                    buttonText: 'Start',
+                    icon: Icons.alarm_add,
+                    onbuttonPressed: () {
+                      AndroidChannel.startAlarmManager();
+                    })
               ],
             ),
           ],
