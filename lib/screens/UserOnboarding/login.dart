@@ -18,9 +18,19 @@ class _LoginFormState extends State<LoginForm> {
   final _passwordFocusNode = FocusNode();
   final _usernameFocusNode = FocusNode();
   final UserLoginDetails loginValues = UserLoginDetails();
+  final UserLoginDetails devDetails = Configurations().getDevDetails();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   void changeDevModeValue(bool value) {
     setState(() {
+      if (value) {
+        _usernameController.text = devDetails.username;
+        _passwordController.text = devDetails.password;
+      } else {
+        _usernameController.text = '';
+        _passwordController.text = '';
+      }
       _devModeSwitchValue = value;
     });
   }
@@ -30,22 +40,13 @@ class _LoginFormState extends State<LoginForm> {
     void performLogin(Function assignToken) async {
       if (_loginFormKey.currentState.validate()) {
         _loginFormKey.currentState.save();
-        DIOResponseBody loginCheck;
-        if (_devModeSwitchValue) {
-          UserLoginDetails devDetails = Configurations().getDevDetails();
-          loginCheck = await API().userLogin({
-            'emailId': devDetails.username,
-            'password': devDetails.password
-          });
-        } else {
-          loginCheck = await API().userLogin({
-            'emailId': loginValues.username,
-            'password': loginValues.password
-          });
-        }
+        DIOResponseBody loginCheck = await API().userLogin({
+          'emailId': loginValues.username,
+          'password': loginValues.password
+        });
+
         if (loginCheck.success) {
           assignToken(loginCheck.data);
-          AlarmManagerBootstraper.bootstrap();
           Navigator.of(context).pushReplacementNamed('/home');
         } else {
           Scaffold.of(context).showSnackBar(SnackBar(
@@ -77,6 +78,7 @@ class _LoginFormState extends State<LoginForm> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(
+              controller: _usernameController,
               focusNode: _usernameFocusNode,
               textInputAction: TextInputAction.next,
               onFieldSubmitted: (_) {
@@ -96,9 +98,6 @@ class _LoginFormState extends State<LoginForm> {
                 loginValues.username = value;
               },
               validator: (value) {
-                if (_devModeSwitchValue) {
-                  return null;
-                }
                 if (value.isEmpty) {
                   return 'Please Enter the Email';
                 }
@@ -113,6 +112,7 @@ class _LoginFormState extends State<LoginForm> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(
+              controller: _passwordController,
               focusNode: _passwordFocusNode,
               textInputAction: TextInputAction.done,
               decoration: InputDecoration(
@@ -129,9 +129,6 @@ class _LoginFormState extends State<LoginForm> {
                 loginValues.password = value;
               },
               validator: (value) {
-                if (_devModeSwitchValue) {
-                  return null;
-                }
                 if (value.isEmpty) {
                   return 'Please Enter the password';
                 }
@@ -144,7 +141,6 @@ class _LoginFormState extends State<LoginForm> {
                     onPressed: () {
                       if (Configurations().bypassBackend) {
                         data.assignAccessToken("dummyToken");
-                        AlarmManagerBootstraper.bootstrap();
                         Navigator.of(context).pushReplacementNamed('/home');
                         return;
                       }
