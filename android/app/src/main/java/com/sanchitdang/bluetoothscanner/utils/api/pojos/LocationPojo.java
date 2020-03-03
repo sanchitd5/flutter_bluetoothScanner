@@ -14,6 +14,7 @@ public class LocationPojo {
     @SerializedName("message")
     private String message;
 
+
     public String getMessage() {
         return message;
     }
