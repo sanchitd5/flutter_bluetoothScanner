@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../helpers/helpers.dart';
+import '../utils/utils.dart';
 
 class UserDataProvider with ChangeNotifier {
   String _accessToken;
@@ -12,10 +13,12 @@ class UserDataProvider with ChangeNotifier {
     var localToken = prefs.getString('accessToken');
     bool status = await API().accessTokenLogin(localToken);
     if (status) {
+      logger.i("Success with AccessToken: $localToken");
       _userLoggedIn = true;
       _accessToken = localToken;
       return true;
     } else {
+      logger.e("Error with AccessToken: $localToken");
       _userLoggedIn = false;
       _accessToken = "";
       return false;
