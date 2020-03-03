@@ -39,7 +39,7 @@ class API {
         .post('user/accessTokenLogin',
             options:
                 Options(headers: {'authorization': 'Bearer ' + accessToken}))
-        .then((respone) {
+        .then((response) {
       return true;
     }).catchError((error) {
       return false;
@@ -49,7 +49,7 @@ class API {
   Future<bool> registerUser(userDetails) async {
     return _dioinstance
         .post('user/register', data: userDetails)
-        .then((respone) {
+        .then((response) {
       return true;
     }).catchError((error) {
       print(error.response);
