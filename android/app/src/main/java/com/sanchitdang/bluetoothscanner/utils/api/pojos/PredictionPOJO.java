@@ -15,38 +15,77 @@ class DateFormatter {
 }
 
 public class PredictionPOJO {
+
+    public static class SensorData {
+        @SerializedName("raw_sensor_data")
+        private List<List<Double>> raw_sensor_data;
+        @SerializedName("timestamp")
+        private String timestamp = DateFormatter.formatToISO();
+
+        public void setTimestamp(String timestamp) {
+            this.timestamp = timestamp;
+        }
+
+        public void setSensorData(List<List<Double>> data) {
+            this.raw_sensor_data = data;
+        }
+    }
+
+    public static class LocationData {
+
+        @SerializedName("lat")
+        private double latitude;
+
+        @SerializedName("lon")
+        private double longitude;
+
+        @SerializedName("message")
+        private String message;
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setLatitude(double value) {
+            latitude = value;
+        }
+
+        public void setLongitude(double value) {
+            longitude = value;
+        }
+
+    }
+
+
     @SerializedName("data")
-    private List<List<Double>> data;
+    private SensorData data;
 
-    @SerializedName("timestamp")
-    private String timestamp = DateFormatter.formatToISO();
 
-    @SerializedName("latitude")
-    private double latitude;
+    @SerializedName("mode")
+    private String mode;
 
-    @SerializedName("longitude")
-    private double longitude;
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
+    @SerializedName("location")
+    private LocationData location;
+
+    public void setSensorData(SensorData data) {
+        this.data = data;
+    }
+
+    public void setLocationData(LocationData locationData) {
+        this.location = locationData;
+
+    }
+
 
     @SerializedName("message")
     private String message;
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public void setData(List<List<Double>> data) {
-        this.data = data;
-    }
 
     public String getMessage() {
         return message;
     }
 
-    public void setLatitude(double value) {
-        latitude = value;
-    }
-
-    public void setLongitude(double value) {
-        longitude = value;
-    }
 }

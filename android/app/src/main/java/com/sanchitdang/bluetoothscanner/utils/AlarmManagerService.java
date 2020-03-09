@@ -164,7 +164,7 @@ public class AlarmManagerService extends BroadcastReceiver {
                     this.addToQueue(context, "emitLocation", 2, "ONETIME", 2);
                 } else {
                     //TODO: Fix service not being removed
-                    Log.d(TAG, "onReceive: Found invalid token\nInvalid Token: "+token+"\nRemoving location emitting function from queue ");
+                    Log.d(TAG, "onReceive: Found invalid token\nInvalid Token: " + token + "\nRemoving location emitting function from queue ");
                     this.removeAlarmFromQueue(context, 1);
                 }
                 break;
@@ -178,13 +178,17 @@ public class AlarmManagerService extends BroadcastReceiver {
                     Location currentData = locationService.getLastLocation();
                     if (null != currentData) {
                         Log.d(TAG, "onReceive: we have current location data");
+                        PredictionPOJO _predictionData = new PredictionPOJO();
                         double currentLatitude = currentData.getLatitude();
                         double currentLongitude = currentData.getLongitude();
-                        PredictionPOJO _predictionData = new PredictionPOJO();
-                        _predictionData.setLatitude(currentLatitude);
-                        _predictionData.setLongitude(currentLongitude);
+                        PredictionPOJO.LocationData _locationData = new PredictionPOJO.LocationData();
+                        _locationData.setLatitude(currentLatitude);
+                        _locationData.setLongitude(currentLongitude);
+                        _predictionData.setLocationData(_locationData);
+                        PredictionPOJO.SensorData _sensorData = new PredictionPOJO.SensorData();
                         PredictionData dump = new PredictionData();
-                        _predictionData.setData(dump.getData());
+                        _sensorData.setSensorData(dump.getData());
+                        _predictionData.setSensorData(_sensorData);
                         Log.d(TAG, "configureFlutterEngine: " + _predictionData);
                         API _apiInstance = new API(context);
                         _apiInstance.sendPredictionData(_predictionData);
