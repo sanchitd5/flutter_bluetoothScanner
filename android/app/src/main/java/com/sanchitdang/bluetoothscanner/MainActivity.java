@@ -11,6 +11,10 @@ import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 import io.flutter.plugin.common.MethodChannel;
+import io.flutter.plugin.common.PluginRegistry;
+import io.flutter.plugin.common.PluginRegistry.PluginRegistrantCallback;
+
+import io.flutter.plugins.firebasemessaging.FlutterFirebaseMessagingService;
 
 import android.location.Location;
 
@@ -27,6 +31,7 @@ public class MainActivity extends FlutterActivity {
 
     @Override
     public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
+
 
         Log.d("Flutter Engine", "inside configuration function");
         GeneratedPluginRegistrant.registerWith(flutterEngine);

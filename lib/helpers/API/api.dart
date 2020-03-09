@@ -34,9 +34,10 @@ class API {
     });
   }
 
-  Future<bool> accessTokenLogin(accessToken) async {
+  Future<bool> accessTokenLogin(accessToken, body) async {
     return _dioinstance
         .post('user/accessTokenLogin',
+            data: body,
             options:
                 Options(headers: {'authorization': 'Bearer ' + accessToken}))
         .then((response) {

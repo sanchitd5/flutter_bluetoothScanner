@@ -1,5 +1,8 @@
 class UserLoginDetails {
   String username;
   String password;
-  UserLoginDetails({this.username, this.password});
+  String deviceToken;
+  String deviceType="ANDROID";
+
+  UserLoginDetails({this.username, this.password, this.deviceToken});
 }

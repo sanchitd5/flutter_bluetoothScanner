@@ -13,12 +13,11 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-
     <application
-        android:name="io.flutter.app.FlutterApplication"
+        android:name=".Application"
         android:icon="@mipmap/ic_launcher"
-        android:usesCleartextTraffic="true"
-        android:label="Bluetooth Scanner">
+        android:label="Bluetooth Scanner"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
@@ -30,17 +29,22 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="FLUTTER_NOTIFICATION_CLICK" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
+
         <service
             android:name="io.flutter.plugins.androidalarmmanager.AlarmService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+
         <receiver
             android:name="com.sanchitdang.bluetoothscanner.utils.AlarmManagerService"
             android:enabled="true"
             android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE">
-        </receiver>
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
         <receiver
             android:name="io.flutter.plugins.androidalarmmanager.AlarmBroadcastReceiver"
             android:exported="false" />

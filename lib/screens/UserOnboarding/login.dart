@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
 import '../../configurations/configurations.dart';
 
 import '../../helpers/helpers.dart';
@@ -21,6 +23,7 @@ class _LoginFormState extends State<LoginForm> {
   final UserLoginDetails devDetails = Configurations().getDevDetails();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
 
   void changeDevModeValue(bool value) {
     setState(() {
@@ -42,7 +45,9 @@ class _LoginFormState extends State<LoginForm> {
         _loginFormKey.currentState.save();
         DIOResponseBody loginCheck = await API().userLogin({
           'emailId': loginValues.username,
-          'password': loginValues.password
+          'password': loginValues.password,
+          'deviceType': "ANDROID",
+          'deviceToken': await _firebaseMessaging.getToken()
         });
 
         if (loginCheck.success) {
@@ -63,18 +68,19 @@ class _LoginFormState extends State<LoginForm> {
         shrinkWrap: true,
         children: <Widget>[
           Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: <Widget>[
-                  Text('DevMode'),
-                  Switch(
-                    value: _devModeSwitchValue,
-                    onChanged: (newValue) {
-                      changeDevModeValue(newValue);
-                    },
-                  ),
-                ],
-              )),
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: <Widget>[
+                Text('DevMode'),
+                Switch(
+                  value: _devModeSwitchValue,
+                  onChanged: (newValue) {
+                    changeDevModeValue(newValue);
+                  },
+                ),
+              ],
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(

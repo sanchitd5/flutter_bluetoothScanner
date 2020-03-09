@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
 import '../helpers/helpers.dart';
 import '../utils/utils.dart';
 
 class UserDataProvider with ChangeNotifier {
   String _accessToken;
   bool _userLoggedIn = false;
+  final FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
 
   Future<bool> accessTokenLogin() async {
     final prefs = await SharedPreferences.getInstance();
     if (!prefs.containsKey('accessToken')) return false;
     var localToken = prefs.getString('accessToken');
-    bool status = await API().accessTokenLogin(localToken);
+    bool status = await API().accessTokenLogin(localToken, {
+      "deviceType": "ANDROID",
+      "deviceToken": await _firebaseMessaging.getToken()
+    });
     if (status) {
       logger.i("Success with AccessToken: $localToken");
       _userLoggedIn = true;

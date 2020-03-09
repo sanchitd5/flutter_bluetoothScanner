@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "588543793853",
+    "firebase_url": "https://testplate-e5630.firebaseio.com",
+    "project_id": "testplate-e5630",
+    "storage_bucket": "testplate-e5630.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:588543793853:android:0195f4b692c04a0c7bf5d4",
+        "android_client_info": {
+          "package_name": "com.sanchitdang.bluetoothscanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "588543793853-urno4hmsmt80olo6g6tso9nbi4kdb72t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqovNFmswQF0ymZbboSEYslQzCHeW9YmY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "588543793853-urno4hmsmt80olo6g6tso9nbi4kdb72t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
