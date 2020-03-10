@@ -4,3 +4,5 @@ export './UserOnboarding/signup.dart';
 export './BluetoothScanner/BluetoothDeviceList.dart';
 export './BluetoothScanner/BluetoothDeviceScreen.dart';
 export './BluetoothScanner/BluetoothConnection.dart';
+export './testArea/testArea.dart';
+export './SqfliteTesting/SqfliteTesting.dart';

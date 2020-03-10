@@ -7,6 +7,8 @@ class Routes {
     '/login': (ctx) => Login(),
     '/home': (ctx) => Home(),
     SignUp.route: (ctx) => SignUp(),
+    TestArea.route: (ctx) => TestArea(),
+    SqfliteTesting.route: (ctx) => SqfliteTesting(),
     BluetoothConnection.route: (ctx) => BluetoothConnection(),
     DeviceScreen.route: (ctx) => DeviceScreen()
   };
