@@ -1,12 +1,8 @@
-import 'package:bluetoothScanner/helpers/helpers.dart';
-
-import '../../helpers/Channels/AndroidChannel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../providers/providers.dart';
 import '../../widgets/widgets.dart';
-import '../../utils/utils.dart';
 
 class Home extends StatelessWidget {
   @override
