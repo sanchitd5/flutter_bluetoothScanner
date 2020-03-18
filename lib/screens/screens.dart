@@ -6,3 +6,5 @@ export './BluetoothScanner/BluetoothDeviceScreen.dart';
 export './BluetoothScanner/BluetoothConnection.dart';
 export './testArea/testArea.dart';
 export './SqfliteTesting/SqfliteTesting.dart';
+export './IntroModule/IntroModule.dart';
+export './ProfileSetup/ProfileSetup.dart';

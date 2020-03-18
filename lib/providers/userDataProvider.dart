@@ -31,8 +31,15 @@ class UserDataProvider with ChangeNotifier {
     }
   }
 
-  String get accessToken {
-    if (_accessToken == null) return "";
+  Future<String> get accessToken async {
+    if (_accessToken == null) {
+      final prefs = await SharedPreferences.getInstance();
+      if (!prefs.containsKey('accessToken')) {
+        logger.i("Tried to fetch token No token found in Provider and prefs");
+        return "";
+      }
+      _accessToken = prefs.getString('accessToken');
+    }
     return _accessToken;
   }
 

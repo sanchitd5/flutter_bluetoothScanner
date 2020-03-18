@@ -11,9 +11,8 @@ import android.util.Log;
 
 
 import com.sanchitdang.bluetoothscanner.services.LocationService;
-import com.sanchitdang.bluetoothscanner.utils.api.API;
 import com.sanchitdang.bluetoothscanner.utils.api.pojos.*;
-import com.sanchitdang.bluetoothscanner.dumpData.*;
+import com.sanchitdang.bluetoothscanner.utils.predictionML.PredictionHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,6 +147,30 @@ public class AlarmManagerService extends BroadcastReceiver {
     }
 
 
+    private void emitLocation(Context context) {
+        Log.d(TAG, "onReceive: Called Emit Location Function\nnow checking internet connectivity");
+        if (new ConnectivityManagerService(context).getServiceStatus()) {
+            Log.d(TAG, "onReceive: Internet connectivity is available. :)\nNow emitting location to the backend server. :)");
+            LocationService locationService = LocationService.getInstance();
+            Location currentLocationData = locationService.getLastLocation();
+            if (null != currentLocationData) {
+                Log.d(TAG, "onReceive: we have current location data");
+                PredictionPOJO _predictionData = PredictionHelper.prepareLocationData(currentLocationData);
+                PredictionHelper.injectSensorData(_predictionData);
+                Log.d(TAG, "configureFlutterEngine: " + _predictionData);
+                PredictionHelper.callPredictionAPI(context, _predictionData);
+                Log.d(TAG, "onReceive: EMITTED LOCATION THROUGH ALARM");
+                this.addToQueue(context, "stopLocationService", 2, "ONETIME", 3);
+            } else {
+                Log.d(TAG, "onReceive: location data not available :( :(\n Emitting again after 2 seconds");
+                this.addToQueue(context, "emitLocation", 2, "ONETIME", 2);
+            }
+        } else {
+            Log.d(TAG, "onReceive: Internet Connectivity Problem :( :(");
+        }
+    }
+
+
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d(TAG, "onReceive() called with: context = [" + context + "], intent = [" + intent + "]");
@@ -170,37 +193,7 @@ public class AlarmManagerService extends BroadcastReceiver {
                 break;
             }
             case "emitLocation": {
-                Log.d(TAG, "onReceive: Called Emit Location Function\nnow checking internet connectivity");
-                ConnectivityManagerService connectivityManagerService = new ConnectivityManagerService(context);
-                if (connectivityManagerService.getServiceStatus()) {
-                    Log.d(TAG, "onReceive: Internet connectivity is available. :)\nNow emitting location to the backend server. :)");
-                    LocationService locationService = LocationService.getInstance();
-                    Location currentData = locationService.getLastLocation();
-                    if (null != currentData) {
-                        Log.d(TAG, "onReceive: we have current location data");
-                        PredictionPOJO _predictionData = new PredictionPOJO();
-                        double currentLatitude = currentData.getLatitude();
-                        double currentLongitude = currentData.getLongitude();
-                        PredictionPOJO.LocationData _locationData = new PredictionPOJO.LocationData();
-                        _locationData.setLatitude(currentLatitude);
-                        _locationData.setLongitude(currentLongitude);
-                        _predictionData.setLocationData(_locationData);
-                        PredictionPOJO.SensorData _sensorData = new PredictionPOJO.SensorData();
-                        PredictionData dump = new PredictionData();
-                        _sensorData.setSensorData(dump.getData());
-                        _predictionData.setSensorData(_sensorData);
-                        Log.d(TAG, "configureFlutterEngine: " + _predictionData);
-                        API _apiInstance = new API(context);
-                        _apiInstance.sendPredictionData(_predictionData);
-                        Log.d(TAG, "onReceive: EMITTED LOCATION THROUGH ALARM");
-                        this.addToQueue(context, "stopLocationService", 2, "ONETIME", 3);
-                    } else {
-                        Log.d(TAG, "onReceive: location data not available :( :(\n Emitting again after 2 seconds");
-                        this.addToQueue(context, "emitLocation", 2, "ONETIME", 2);
-                    }
-                } else {
-                    Log.d(TAG, "onReceive: Internet Connectivity Problem :( :(");
-                }
+                emitLocation(context);
                 break;
             }
             case "stopLocationService": {

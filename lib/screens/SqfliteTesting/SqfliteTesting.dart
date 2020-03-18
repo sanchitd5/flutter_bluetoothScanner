@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../../providers/providers.dart';
 import '../../widgets/widgets.dart';
+
 class SqfliteTesting extends StatefulWidget {
   static String route = "/test/sqflite";
 
@@ -46,9 +47,19 @@ class _SqfliteTestingState extends State<SqfliteTesting> {
                       await SQLiteHelper.execute("CREATE TABLE sensorData ("
                           "id INTEGER PRIMARY KEY AUTOINCREMENT,"
                           "sensorId TEXT,"
-                          "charcterstic TEXT,"
+                          "characteristic TEXT,"
                           "timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,"
-                          "data BLOB)");
+                          "time FLOAT"
+                          "angle FLOAT"
+                          "accelX FLOAT"
+                          "accelY FLOAT"
+                          "accelZ FLOAT"
+                          "gyroX FLOAT"
+                          "gyroY FLOAT"
+                          "gyroZ FLOAT"
+                          "magX FLOAT"
+                          "magY FLOAT"
+                          "magZ FLOAT)");
                       setState(() {
                         _result = "Created Table sensorData";
                       });
@@ -64,7 +75,7 @@ class _SqfliteTestingState extends State<SqfliteTesting> {
                       });
                     }),
                 LandingPageCardTileModel(
-                    title: 'Log values from sensor table',
+                    title: 'Get table sturucture table',
                     buttonText: 'Start',
                     icon: Icons.directions_walk,
                     onbuttonPressed: () async {
@@ -72,18 +83,23 @@ class _SqfliteTestingState extends State<SqfliteTesting> {
                       print(val.toString());
                       List data = await SQLiteHelper.rawSelectAll('sensorData');
                       setState(() {
-                        _result = data.join("\n\n").toString();
+                        if (data.length == 0)
+                          _result = "No Data Available";
+                        else
+                          _result = data.join("\n\n").toString();
                       });
                     }),
               ],
             ),
             SizedBox(
-              height: 500,
+              height: 400,
               width: 350,
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   color: Colors.black54,
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
                 ),
                 child: Padding(
                   padding: EdgeInsets.all(10),

@@ -5,7 +5,7 @@ import '../../utils/utils.dart';
 import '../../providers/providers.dart';
 
 class API {
-  final Dio _dioinstance = DioInstance().construct;
+  final Dio _dioInstance = DioInstance().construct;
 
   DIOResponseBody errorHelper(error) {
     if (error.response.isEmpty) {
@@ -16,7 +16,7 @@ class API {
   }
 
   Future<DIOResponseBody> userLogin(details) async {
-    return _dioinstance.post('user/login', data: details).then((respone) {
+    return _dioInstance.post('user/login', data: details).then((respone) {
       return DIOResponseBody(
           success: true, data: respone.data['data']['accessToken']);
     }).catchError((error) {
@@ -35,7 +35,7 @@ class API {
   }
 
   Future<bool> accessTokenLogin(accessToken, body) async {
-    return _dioinstance
+    return _dioInstance
         .post('user/accessTokenLogin',
             data: body,
             options:
@@ -48,7 +48,7 @@ class API {
   }
 
   Future<bool> registerUser(userDetails) async {
-    return _dioinstance
+    return _dioInstance
         .post('user/register', data: userDetails)
         .then((response) {
       return true;
@@ -60,16 +60,33 @@ class API {
 
   Future<DIOResponseBody> sendWeatherPredicationData(
       {latitude, longitude}) async {
-    return _dioinstance
+    return _dioInstance
         .post('user/weather',
             data: {'lat': latitude, 'lon': longitude},
             options: Options(headers: {
-              'authorization': 'Bearer ' + UserDataProvider().accessToken
+              'authorization': 'Bearer ' + await UserDataProvider().accessToken
             }))
         .then((response) {
       return DIOResponseBody(success: true, data: response);
     }).catchError((error) {
       print(error.toString());
+      return null;
+    });
+  }
+
+  Future<DIOResponseBody> createExtenderProfile(Map userData) async {
+    print(UserDataProvider().accessToken);
+    print(userData);
+    return _dioInstance
+        .post("/user/createExtendedProfile",
+            data: userData,
+            options: Options(headers: {
+              'authorization': 'Bearer ' + await UserDataProvider().accessToken
+            }))
+        .then((response) {
+      return DIOResponseBody(success: true, data: response);
+    }).catchError((error) {
+      logger.e(error.toString());
       return null;
     });
   }

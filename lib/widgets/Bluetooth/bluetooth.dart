@@ -104,19 +104,11 @@ class ScanResultTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExpansionTile(
       title: _buildTitle(context),
-      leading: Text(result.rssi.toString()),
       trailing: RaisedButton(
-        child: Text('CONNECT'),
-        color: Colors.black,
-        textColor: Colors.white,
-        onPressed: result.advertisementData.connectable ? onTap : null
-
-        // () {
-        //   // print(result.device);
-        //   startServiceInPlatform(result.device);
-        // },
-        ,
-      ),
+          child: Text('CONNECT'),
+          color: Colors.black,
+          textColor: Colors.white,
+          onPressed: result.advertisementData.connectable ? onTap : null),
       children: <Widget>[
         _buildAdvRow(
             context, 'Complete Local Name', result.advertisementData.localName),
@@ -152,6 +144,9 @@ class ServiceTile extends StatelessWidget {
   Widget build(BuildContext context) {
     if (characteristicTiles.length > 0) {
       return ExpansionTile(
+        onExpansionChanged: (_) {
+          print(service.uuid.toString());
+        },
         title: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,

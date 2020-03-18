@@ -43,11 +43,25 @@ class Home extends StatelessWidget {
                       Navigator.pushNamed(context, '/test/general');
                     }),
                 LandingPageCardTileModel(
-                    title: 'Database Access Token',
+                    title: 'Database Testing Area',
                     buttonText: 'Open',
                     icon: Icons.developer_mode,
                     onbuttonPressed: () {
                       Navigator.pushNamed(context, '/test/sqflite');
+                    }),
+                LandingPageCardTileModel(
+                    title: 'Intro Page',
+                    buttonText: 'Open',
+                    icon: Icons.arrow_forward,
+                    onbuttonPressed: () {
+                      Navigator.pushNamed(context, '/intro');
+                    }),
+                LandingPageCardTileModel(
+                    title: 'Profile Setup Page',
+                    buttonText: 'Open',
+                    icon: Icons.arrow_forward,
+                    onbuttonPressed: () {
+                      Navigator.pushNamed(context, '/profileSetup/1');
                     }),
               ],
             ),

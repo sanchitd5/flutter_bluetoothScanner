@@ -2,27 +2,25 @@ package com.sanchitdang.bluetoothscanner;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
 
-
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 import io.flutter.plugin.common.MethodChannel;
-import io.flutter.plugin.common.PluginRegistry;
-import io.flutter.plugin.common.PluginRegistry.PluginRegistrantCallback;
-
-import io.flutter.plugins.firebasemessaging.FlutterFirebaseMessagingService;
 
 import android.location.Location;
 
-import com.sanchitdang.bluetoothscanner.services.LocationService;
-import com.sanchitdang.bluetoothscanner.utils.AlarmManagerService;
-import com.sanchitdang.bluetoothscanner.utils.ConnectivityManagerService;
+import com.sanchitdang.bluetoothscanner.services.*;
+import com.sanchitdang.bluetoothscanner.utils.*;
 import com.sanchitdang.bluetoothscanner.utils.api.API;
 import com.sanchitdang.bluetoothscanner.utils.api.pojos.LocationPojo;
+import com.sanchitdang.bluetoothscanner.utils.database.AppDatabase;
 
 
 public class MainActivity extends FlutterActivity {
@@ -31,7 +29,6 @@ public class MainActivity extends FlutterActivity {
 
     @Override
     public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
-
 
         Log.d("Flutter Engine", "inside configuration function");
         GeneratedPluginRegistrant.registerWith(flutterEngine);

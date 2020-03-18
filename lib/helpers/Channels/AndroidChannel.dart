@@ -24,6 +24,16 @@ class AndroidChannel {
     logger.e("GIVE LOCATION PERMISSION!");
   }
 
+  static void logSensorData() async{
+    try {
+      String result =
+      await _channel.invokeMethod('logSensorData');
+      logger.i(result.toString());
+    } on PlatformException catch (e) {
+      logger.e(e.message.toString());
+    }
+  }
+
   static void logAccessToken() async {
     try {
       String result =

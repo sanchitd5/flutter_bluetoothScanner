@@ -16,6 +16,9 @@ class Application extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => UserDataProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => UserExtendedProfileProvider(),
+        )
       ],
       child: Consumer<UserDataProvider>(
         builder: (_, data, __) => MaterialApp(

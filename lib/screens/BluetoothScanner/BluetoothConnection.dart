@@ -20,13 +20,7 @@ class BluetoothConnection extends StatelessWidget {
             builder: (_, data, __) => Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Select the device assigned to you',
-                    textAlign: TextAlign.left,
-                  ),
-                ),
+               
                 Flexible(
                     child: StreamBuilder<BluetoothState>(
                         stream: FlutterBlue.instance.state,

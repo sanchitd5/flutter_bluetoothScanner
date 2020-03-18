@@ -24,7 +24,7 @@ class _LoginFormState extends State<LoginForm> {
   final TextEditingController _passwordController = TextEditingController();
   final FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
 
-  void changeDevModeValue(bool value) {
+  void _changeDevModeValue(bool value) {
     setState(() {
       if (value) {
         _usernameController.text = devDetails.username;
@@ -74,7 +74,7 @@ class _LoginFormState extends State<LoginForm> {
                 Switch(
                   value: _devModeSwitchValue,
                   onChanged: (newValue) {
-                    changeDevModeValue(newValue);
+                    _changeDevModeValue(newValue);
                   },
                 ),
               ],

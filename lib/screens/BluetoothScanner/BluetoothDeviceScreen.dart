@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+
+import 'dart:convert';
 import '../../widgets/widgets.dart';
+import '../../utils/utils.dart';
 
 class DeviceScreen extends StatefulWidget {
   static String route = "/bluetoothDevice";
   final BluetoothDevice device;
+
   DeviceScreen({Key key, this.device}) : super(key: key);
 
   @override
@@ -14,6 +18,10 @@ class DeviceScreen extends StatefulWidget {
 
 class _DeviceScreenState extends State<DeviceScreen> {
   bool isConnected = false;
+
+  void logMyValues(BluetoothCharacteristic characteristic) {
+    characteristic.value.listen((onData) {});
+  }
 
   List<Widget> _buildServiceTiles(List<BluetoothService> services) {
     return services
@@ -26,8 +34,12 @@ class _DeviceScreenState extends State<DeviceScreen> {
                     characteristic: c,
                     onReadPressed: () => c.read(),
                     onWritePressed: () => c.write([13, 24]),
-                    onNotificationPressed: () =>
-                        c.setNotifyValue(!c.isNotifying),
+                    onNotificationPressed: () {
+                      c.value.listen((sensorData) async {
+                        print("MYDATA:   " + sensorData.toString());
+                      });
+                      c.setNotifyValue(!c.isNotifying);
+                    },
                     descriptorTiles: c.descriptors
                         .map(
                           (d) => DescriptorTile(
